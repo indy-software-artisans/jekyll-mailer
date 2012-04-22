@@ -10,7 +10,7 @@ use Rack::Cors do |config|
 end
 
 set :mail_options, {
-                      :to => 'officers@indysa.org',
+                      :to => 'officers@indyalt.net',
                       :from => "contact-form@indysa.org",
                       :via => :smtp, 
                       :via_options => {
