@@ -10,30 +10,35 @@ use Rack::Cors do |config|
 end
 
 set :mail_options, {
-                      :to => "officers@indysa.org",
-                      :from => "Website Form",
+                      :to => 'officers@indysa.org',
+                      :from => "contact-form@indysa.org",
                       :via => :smtp, 
-                      :smtp => {
-                        :host => 'smtp.gmail.com',
+                      :via_options => {
+                        :address => 'smtp.sendgrid.net',
                         :port => '587',
-                        :user => 'you@example.com',
-                        :password => 'password',
-                        :auth => :plain,
-                        :domain => "example.com"
-                      } 
+                        :domain => 'heroku.com',
+                        :user_name => ENV['SENDGRID_USERNAME'],
+                        :password => ENV['SENDGRID_PASSWORD'],
+                        :authentication => :plain,
+                        :enable_starttls_auto => true
+                      }
                     }
 
-get '/mail' do
-  settings.mail_options[:body] = "hiya"
-
-  settings.mail_options.inspect
+get '/status' do
+  "<h1 style='color: green'>Operational</h1>"
 end
 
 post '/mail' do
-  settings.mail_options[:body] = "hiya"
-  settings.mail_options[:subject] = "hiya"
+  senders_name = params[:name]
+  senders_email = params[:email]
+  msg = params[:message]
+  subject = params[:subject]
+
+  body = "#{senders_name}, #{senders_email}\n\n#{subject}\n\n#{msg}"
+
+  settings.mail_options[:body] = body
+  settings.mail_options[:subject] = "New message via IndySA.org contact form"
 
   Pony.mail(settings.mail_options)
-
-  return
+  redirect "http://indysa.org/success.html"
 end
