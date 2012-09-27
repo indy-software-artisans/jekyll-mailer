@@ -14,11 +14,11 @@ set :mail_options, {
                       :from => "contact-form@indysa.org",
                       :via => :smtp, 
                       :via_options => {
-                        :address => ENV['MAILGUN_SMTP_SERVER'],
-                        :port => ENV['MAILGUN_SMTP_PORT'],
+                        :address => ENV['INDYSA_SERVER'],
+                        :port => 25,
                         :domain => 'heroku.com',
-                        :user_name => ENV['MAILGUN_SMTP_LOGIN'],
-                        :password => ENV['MAILGUN_SMTP_PASSWORD'],
+                        :user_name => ENV['INDYSA_USER'],
+                        :password => ENV['INDYSA_PASSWORD'],
                         :authentication => :plain,
                         :enable_starttls_auto => true
                       }
