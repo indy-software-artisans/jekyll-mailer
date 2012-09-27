@@ -11,6 +11,7 @@ end
 
 set :mail_options, {
                       :to => 'info@indysa.org',
+                      :from => ENV['INDYSA_USER'],
                       :via => :smtp, 
                       :via_options => {
                         :address => ENV['INDYSA_SERVER'],
